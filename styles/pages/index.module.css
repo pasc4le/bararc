@@ -1,0 +1,7 @@
+.title {
+    @apply text-white text-6xl font-sans;
+}
+
+.main {
+    @apply bg-warmGray-800 h-screen flex items-center justify-center;
+}
