@@ -28,6 +28,11 @@ export default function Home() {
     map.current.once('load', () => {
       // This code runs once the base style has finished loading.
 
+      map.current.loadImage('/imgs/shop-15.png', (err, image) => {
+        if (err) throw err;
+        map.current.addImage('store-icon', image, { sdf: true });
+      });
+
       map.current.addSource('trailheads', {
         type: 'geojson',
         data: '/api/trailheads',
@@ -43,9 +48,9 @@ export default function Home() {
 
         paint: {
           'circle-color': ['get', 'grade'],
-          'circle-stroke-width': 1.5,
+          'circle-stroke-width': 0.5,
           'circle-stroke-color': 'white',
-          'circle-radius': ['case', ['get', 'cluster'], 10, 5], // 10 pixels for clusters, 5 pixels otherwise
+          'circle-radius': 10, // ['case', ['get', 'cluster'], 10, 10], // 10 pixels for clusters, 5 pixels otherwise
         },
       });
 
@@ -54,7 +59,11 @@ export default function Home() {
         type: 'symbol',
         source: 'trailheads',
         layout: {
-          'icon-image': 'hot-spring',
+          'icon-image': ['get', 'trailheadType'],
+          'icon-size': 0.5,
+        },
+        paint: {
+          'icon-color': 'white',
         },
       });
 
