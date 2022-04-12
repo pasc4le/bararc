@@ -1,4 +1,4 @@
-import { getTrailheads } from 'lib/data';
+import { getTrailheads } from 'lib/map';
 
 export default async function handler(req, res) {
   const { type } = req.query;

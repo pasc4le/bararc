@@ -9,6 +9,8 @@ import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-load
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
+const SDF_ICONS = ['store-icon'];
+
 export default function Home() {
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -28,10 +30,11 @@ export default function Home() {
     map.current.once('load', () => {
       // This code runs once the base style has finished loading.
 
-      map.current.loadImage('/imgs/shop-15.png', (err, image) => {
-        if (err) throw err;
-        map.current.addImage('store-icon', image, { sdf: true });
-      });
+      for (let i = 0; i < SDF_ICONS.length; i++)
+        map.current.loadImage(`/icons/${SDF_ICONS[i]}.png`, (err, image) => {
+          if (err) throw err;
+          map.current.addImage(SDF_ICONS[i], image, { sdf: true });
+        });
 
       map.current.addSource('trailheads', {
         type: 'geojson',
@@ -47,7 +50,19 @@ export default function Home() {
         source: 'trailheads',
 
         paint: {
-          'circle-color': ['get', 'grade'],
+          'circle-color': [
+            'match',
+            ['get', 'grade'],
+            'low',
+            'green',
+            'medium',
+            'yellow',
+            'high',
+            'red',
+            'extreme',
+            'blue',
+            'black',
+          ],
           'circle-stroke-width': 0.5,
           'circle-stroke-color': 'white',
           'circle-radius': 10, // ['case', ['get', 'cluster'], 10, 10], // 10 pixels for clusters, 5 pixels otherwise
@@ -59,8 +74,9 @@ export default function Home() {
         type: 'symbol',
         source: 'trailheads',
         layout: {
-          'icon-image': ['get', 'trailheadType'],
+          'icon-image': ['get', 'icon-type'],
           'icon-size': 0.5,
+          'icon-offset': [0, -1.5],
         },
         paint: {
           'icon-color': 'white',
