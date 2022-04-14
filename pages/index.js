@@ -100,8 +100,16 @@ export default function Home() {
   });
 
   return (
-    <div>
+    <main className={style.mapWrapper}>
       <div ref={mapContainer} className={style.mapContainer} />
-    </div>
+      <button className={style.reportButton}>
+        Segnala una Barriera Archiettonica
+      </button>
+      <div className={style.reportModalWrapper}>
+        <div className={style.reportModal}>
+          <h3>Segnala una barriera</h3>
+        </div>
+      </div>
+    </main>
   );
 }

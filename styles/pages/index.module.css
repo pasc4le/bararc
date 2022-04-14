@@ -1,4 +1,12 @@
 .mapContainer {
-  height: 100vh;
+  @apply h-screen;
 }
 
+.reportButton {
+  @apply absolute bottom-5 left-1/2;
+  @apply bg-gradient-to-tl from-purple-600 to-purple-700;
+  @apply font-bold text-white shadow-md;
+  @apply px-4 py-2 rounded-full;
+  @apply opacity-70 hover:opacity-100 transition-all;
+  transform: translateX(-50%);
+}
