@@ -51,8 +51,11 @@ module.exports = {
       sans: ['Poppins', ...defaultFontFamily['sans']],
       serif: [...defaultFontFamily['serif']],
       mono: [...defaultFontFamily['mono']],
+      body: ['Lato', ...defaultFontFamily['sans']],
     },
   },
   plugins: [],
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
 };
-

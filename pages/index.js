@@ -17,6 +17,7 @@ export default function Home() {
   const [lng, setLng] = useState(13.907813);
   const [lat, setLat] = useState(40.729256);
   const [zoom, setZoom] = useState(12);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -102,14 +103,55 @@ export default function Home() {
   return (
     <main className={style.mapWrapper}>
       <div ref={mapContainer} className={style.mapContainer} />
-      <button className={style.reportButton}>
+      <button
+        className={style.reportButton}
+        onClick={() => setOpenModal(!openModal)}
+      >
         Segnala una Barriera Archiettonica
       </button>
-      <div className={style.reportModalWrapper}>
-        <div className={style.reportModal}>
-          <h3>Segnala una barriera</h3>
+      {openModal && (
+        <div className={style.reportModalWrapper}>
+          <div
+            className={style.reportModalClose}
+            onClick={() => setOpenModal(!openModal)}
+          />
+          <div className={style.reportModal}>
+            <h3>Segnala una barriera</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut
+              diam ut dui mollis gravida venenatis eget enim. Nulla pretium
+              pulvinar dolor at mattis. Vivamus at convallis risus.
+            </p>
+            <input
+              id="address"
+              name="address"
+              type="text"
+              placeholder="Inserisci l'indirizzo del luogo"
+            />
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Inserisci il nome della struttura"
+            />
+            <textarea
+              name="desc"
+              id="desc"
+              placeholder="Inserisci una breve descrizione"
+            />
+            <select name="grade" id="grade" placeholder="Grado di Importanza">
+              <option value="low">Basso</option>
+              <option value="medium">Medio</option>
+              <option value="high">Alto</option>
+            </select>
+            <select name="type" id="type" placeholder="Tipo di Struttura">
+              <option value="store-icon">Supermarket</option>
+            </select>
+
+            <button>Invia Modulo</button>
+          </div>
         </div>
-      </div>
+      )}
     </main>
   );
 }
