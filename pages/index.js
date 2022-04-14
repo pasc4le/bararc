@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { ISCHIA_DATA } from 'lib/utils';
 
 /* Style */
 import style from 'styles/pages/index.module.css';
@@ -15,8 +16,8 @@ const SDF_ICONS = ['store-icon'];
 export default function Home() {
   const mapContainer = useRef(null);
   const map = useRef(null);
-  const [lng, setLng] = useState(13.907813);
-  const [lat, setLat] = useState(40.729256);
+  const [lng, setLng] = useState(ISCHIA_DATA.lng);
+  const [lat, setLat] = useState(ISCHIA_DATA.lat);
   const [zoom, setZoom] = useState(12);
   const [openModal, setOpenModal] = useState(false);
 
