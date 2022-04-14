@@ -1,6 +1,6 @@
 # BarArc
 
-This repo could be used as a template to create projects with nextjs.
+Demo: https://bararc.vercel.app/
 
 ```
 # use this if you want to run in development mode
