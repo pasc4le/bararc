@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ISCHIA_DATA } from 'lib/utils';
+import { message } from 'react-message-popup';
 
 /* Style */
 import style from 'styles/pages/index.module.css';
@@ -29,11 +30,19 @@ export default function Home() {
       desc: document.querySelector('#reportModal #desc').value,
       grade: document.querySelector('#reportModal #grade').value,
     };
-    console.log(data);
-    const ans = await axios
-      .post('/api/report', data)
-      .catch((e) => console.log(e.response));
-    console.log(ans);
+
+    message.loading('Caricando...', 4000).then(async ({ destory }) => {
+      await axios
+        .post('/api/report', data)
+        .then((r) => {
+          destory();
+          message.success('Segnalazione Inviata', 2000);
+        })
+        .catch((e) => {
+          destory();
+          message.error(e.response.data);
+        });
+    });
   };
 
   useEffect(() => {
