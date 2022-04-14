@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import axios from 'axios';
 
 /* Style */
 import style from 'styles/pages/index.module.css';
@@ -18,6 +19,21 @@ export default function Home() {
   const [lat, setLat] = useState(40.729256);
   const [zoom, setZoom] = useState(12);
   const [openModal, setOpenModal] = useState(false);
+
+  const submitForm = async () => {
+    const data = {
+      name: document.querySelector('#reportModal #name').value,
+      address: document.querySelector('#reportModal #address').value,
+      type: document.querySelector('#reportModal #type').value,
+      desc: document.querySelector('#reportModal #desc').value,
+      grade: document.querySelector('#reportModal #grade').value,
+    };
+    console.log(data);
+    const ans = await axios
+      .post('/api/report', data)
+      .catch((e) => console.log(e.response));
+    console.log(ans);
+  };
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -115,7 +131,7 @@ export default function Home() {
             className={style.reportModalClose}
             onClick={() => setOpenModal(!openModal)}
           />
-          <div className={style.reportModal}>
+          <div className={style.reportModal} id="reportModal">
             <h3>Segnala una barriera</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut
@@ -148,7 +164,7 @@ export default function Home() {
               <option value="store-icon">Supermarket</option>
             </select>
 
-            <button>Invia Modulo</button>
+            <button onClick={() => submitForm()}>Invia Modulo</button>
           </div>
         </div>
       )}
