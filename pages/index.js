@@ -16,12 +16,15 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 export default function Home({ isMobileView }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const marker = useRef(null);
   const [lng, setLng] = useState(ISCHIA_DATA.lng);
   const [lat, setLat] = useState(
     isMobileView ? ISCHIA_DATA.mlat : ISCHIA_DATA.lat
   );
   const [zoom, setZoom] = useState(isMobileView ? 11 : 12);
   const [openModal, setOpenModal] = useState(false);
+  const [markerCoords, setMarkerCoords] = useState(null);
+  const [markerData, setMarkerData] = useState(null);
 
   const submitForm = async () => {
     const data = {
@@ -32,6 +35,11 @@ export default function Home({ isMobileView }) {
       grade: document.querySelector('#reportModal #grade').value,
     };
 
+    if (document.querySelector('#reportModal #position').checked) {
+      data.lng = markerCoords[0];
+      data.lat = markerCoords[1];
+    }
+
     message.loading('Caricando...', 4000).then(async ({ destory }) => {
       await axios
         .post('/api/report', data)
@@ -41,10 +49,42 @@ export default function Home({ isMobileView }) {
         })
         .catch((e) => {
           destory();
-          message.error(e.response.data);
+          message.error(e.response.data || 'Si è verificato un errore');
         });
     });
   };
+
+  useEffect(() => {
+    if (
+      !markerCoords ||
+      !Array.isArray(markerCoords) ||
+      markerCoords?.length < 2
+    )
+      return;
+
+    const fetchData = async () => {
+      const data = await axios
+        .get(`/api/geocode?query=${markerCoords[0]},${markerCoords[1]}`)
+        .then((r) => r.data);
+
+      setMarkerData({
+        name: data.features[0].text,
+        address: data.features[0].place_name,
+        toReport: true,
+      });
+    };
+
+    fetchData();
+
+    if (marker.current) {
+      marker.current.setLngLat(markerCoords);
+      return;
+    }
+
+    marker.current = new mapboxgl.Marker()
+      .setLngLat(markerCoords)
+      .addTo(map.current);
+  }, [markerCoords]);
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -57,7 +97,6 @@ export default function Home({ isMobileView }) {
 
     map.current.once('load', () => {
       // This code runs once the base style has finished loading.
-
       Object.keys(GENERAL_SETTINGS.icons).forEach((v) => {
         map.current.loadImage(`/icons/${v}.png`, (err, image) => {
           if (err) throw err;
@@ -111,6 +150,10 @@ export default function Home({ isMobileView }) {
         },
       });
 
+      map.current.on('click', async (event) => {
+        setMarkerCoords([event.lngLat.lng, event.lngLat.lat]);
+      });
+
       map.current.addLayer({
         id: 'trailheads-cluster-count',
         type: 'symbol',
@@ -133,12 +176,29 @@ export default function Home({ isMobileView }) {
         <title>Barriere Architettoniche Ischia</title>
       </Head>
       <div ref={mapContainer} className={style.mapContainer} />
-      <button
-        className={style.reportButton}
-        onClick={() => setOpenModal(!openModal)}
-      >
-        Segnala una Barriera Archietettonica
-      </button>
+      {!markerData && (
+        <button
+          className={style.reportButton}
+          onClick={() => setOpenModal(!openModal)}
+        >
+          Segnala una Barriera Archietettonica
+        </button>
+      )}
+      {markerData && (
+        <div className={style.markerDataModal}>
+          <h4>{markerData.name}</h4>
+          <p>{markerData.address}</p>
+          <p>{markerData.desc}</p>
+          {markerData.toReport && (
+            <button
+              className={style.reportButton}
+              onClick={() => setOpenModal(!openModal)}
+            >
+              Segnala
+            </button>
+          )}
+        </div>
+      )}
       {openModal && (
         <div className={style.reportModalWrapper}>
           <div
@@ -158,6 +218,13 @@ export default function Home({ isMobileView }) {
               name="address"
               type="text"
               placeholder="Inserisci l'indirizzo del luogo"
+              value={markerData?.address}
+              onChange={(e) => {
+                setMarkerData({
+                  ...markerData,
+                  address: e.target.value,
+                });
+              }}
             />
             <label htmlFor="name">Nome</label>
             <input
@@ -165,6 +232,13 @@ export default function Home({ isMobileView }) {
               name="name"
               type="text"
               placeholder="Inserisci il nome della struttura"
+              value={markerData?.name}
+              onChange={(e) => {
+                setMarkerData({
+                  ...markerData,
+                  name: e.target.value,
+                });
+              }}
             />
             <label htmlFor="desc">Descrizione</label>
             <textarea
@@ -172,7 +246,7 @@ export default function Home({ isMobileView }) {
               id="desc"
               placeholder="Inserisci una breve descrizione"
             />
-            <label htmlFor="">Classificazione Barriera</label>
+            <label htmlFor="grade">Classificazione Barriera</label>
             <select name="grade" id="grade" placeholder="Grado di Importanza">
               {Object.keys(GENERAL_SETTINGS.types).map((v, i) => (
                 <option value={v} key={i}>
@@ -180,7 +254,7 @@ export default function Home({ isMobileView }) {
                 </option>
               ))}
             </select>
-            <label htmlFor="">Tipo di Struttura</label>
+            <label htmlFor="type">Tipo di Struttura</label>
             <select name="type" id="type" placeholder="Tipo di Struttura">
               {Object.keys(GENERAL_SETTINGS.icons).map((v, i) => (
                 <option value={v} key={i}>
@@ -188,6 +262,14 @@ export default function Home({ isMobileView }) {
                 </option>
               ))}
             </select>
+
+            <label htmlFor="position">Posizione dalla Mappa</label>
+            <input
+              type="checkbox"
+              name="position"
+              id="position"
+              disabled={!markerData}
+            />
 
             <button onClick={() => submitForm()}>Invia Modulo</button>
           </div>

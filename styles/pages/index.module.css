@@ -2,6 +2,17 @@
   @apply h-screen relative;
 }
 
+.markerDataModal {
+  @apply fixed top-0 left-0 w-1/4 bottom-0;
+  @apply bg-white;
+  @apply px-4 py-6;
+  @apply shadow-md;
+
+  h4 {
+    @apply font-sans font-semibold text-2xl;
+  }
+}
+
 .reportButton {
   @apply absolute bottom-10 sm:bottom-5 left-1/2;
   @apply text-base;
