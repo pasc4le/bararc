@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { GENERAL_SETTINGS, ISCHIA_DATA } from 'lib/utils';
+import { GENERAL_SETTINGS, gradeToColor, ISCHIA_DATA } from 'lib/utils';
 import { message } from 'react-message-popup';
 import Head from 'next/head';
 
@@ -167,10 +167,6 @@ export default function Home({ isMobileView }) {
         } else setMarkerCoords([event.lngLat.lng, event.lngLat.lat]);
       });
 
-      map.current.on('click', 'land', (event) => {
-        console.log(event);
-      });
-
       map.current.on('mouseenter', 'trailheads-circle', () => {
         map.current.getCanvas().style.cursor = 'pointer';
       });
@@ -215,6 +211,30 @@ export default function Home({ isMobileView }) {
           <h4>{markerData.name}</h4>
           <p>{markerData.address}</p>
           <p>{markerData.desc}</p>
+          {markerData?.grade && (
+            <p>
+              Classificazione:{' '}
+              <span
+                style={{
+                  color: gradeToColor(markerData?.grade),
+                }}
+              >
+                {GENERAL_SETTINGS.types[markerData.grade]}
+              </span>
+            </p>
+          )}
+          {(markerData?.type || markerData['icon-type']) && (
+            <p>
+              Tipo di Struttura:{' '}
+              <span>
+                {
+                  GENERAL_SETTINGS.icons[
+                    markerData?.type || markerData['icon-type']
+                  ]
+                }
+              </span>
+            </p>
+          )}
           {markerData.toReport && (
             <button
               className={style.reportButton}
