@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { ISCHIA_DATA } from 'lib/utils';
+import { GENERAL_SETTINGS, ISCHIA_DATA } from 'lib/utils';
 import { message } from 'react-message-popup';
 
 /* Style */
@@ -59,11 +59,12 @@ export default function Home({ isMobileView }) {
     map.current.once('load', () => {
       // This code runs once the base style has finished loading.
 
-      for (let i = 0; i < SDF_ICONS.length; i++)
-        map.current.loadImage(`/icons/${SDF_ICONS[i]}.png`, (err, image) => {
+      Object.keys(GENERAL_SETTINGS.icons).forEach((v) => {
+        map.current.loadImage(`/icons/${v}.png`, (err, image) => {
           if (err) throw err;
-          map.current.addImage(SDF_ICONS[i], image, { sdf: true });
+          map.current.addImage(v, image, { sdf: true });
         });
+      });
 
       map.current.addSource('trailheads', {
         type: 'geojson',
@@ -83,11 +84,11 @@ export default function Home({ isMobileView }) {
             'match',
             ['get', 'grade'],
             'low',
-            'green',
+            GENERAL_SETTINGS.typesColors.low,
             'medium',
-            'yellow',
+            GENERAL_SETTINGS.typesColors.medium,
             'high',
-            'red',
+            GENERAL_SETTINGS.typesColors.high,
             'extreme',
             'blue',
             'black',
@@ -104,8 +105,7 @@ export default function Home({ isMobileView }) {
         source: 'trailheads',
         layout: {
           'icon-image': ['get', 'icon-type'],
-          'icon-size': 0.5,
-          'icon-offset': [0, -1.5],
+          'icon-size': 0.25,
         },
         paint: {
           'icon-color': 'white',
@@ -150,30 +150,41 @@ export default function Home({ isMobileView }) {
               diam ut dui mollis gravida venenatis eget enim. Nulla pretium
               pulvinar dolor at mattis. Vivamus at convallis risus.
             </p>
+            <label htmlFor="address">Indirizzo</label>
             <input
               id="address"
               name="address"
               type="text"
               placeholder="Inserisci l'indirizzo del luogo"
             />
+            <label htmlFor="name">Nome</label>
             <input
               id="name"
               name="name"
               type="text"
               placeholder="Inserisci il nome della struttura"
             />
+            <label htmlFor="desc">Descrizione</label>
             <textarea
               name="desc"
               id="desc"
               placeholder="Inserisci una breve descrizione"
             />
+            <label htmlFor="">Classificazione Barriera</label>
             <select name="grade" id="grade" placeholder="Grado di Importanza">
-              <option value="low">Basso</option>
-              <option value="medium">Medio</option>
-              <option value="high">Alto</option>
+              {Object.keys(GENERAL_SETTINGS.types).map((v, i) => (
+                <option value={v} key={i}>
+                  {GENERAL_SETTINGS.types[v]}
+                </option>
+              ))}
             </select>
+            <label htmlFor="">Tipo di Struttura</label>
             <select name="type" id="type" placeholder="Tipo di Struttura">
-              <option value="store-icon">Supermarket</option>
+              {Object.keys(GENERAL_SETTINGS.icons).map((v, i) => (
+                <option value={v} key={i}>
+                  {GENERAL_SETTINGS.icons[v]}
+                </option>
+              ))}
             </select>
 
             <button onClick={() => submitForm()}>Invia Modulo</button>
