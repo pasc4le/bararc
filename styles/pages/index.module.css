@@ -7,8 +7,8 @@
   @apply bg-white;
   @apply px-4 pt-6 pb-24;
   @apply md:shadow-md;
-  @apply -mt-64;
-  @apply min-h-[300px];
+  @apply -mt-64 md:-mt-0;
+  @apply min-h-[300px] md:min-w-[350px];
   @apply z-10;
 
   h4 {
