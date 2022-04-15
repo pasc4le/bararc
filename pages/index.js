@@ -18,7 +18,9 @@ export default function Home({ isMobileView }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(ISCHIA_DATA.lng);
-  const [lat, setLat] = useState(ISCHIA_DATA.lat);
+  const [lat, setLat] = useState(
+    isMobileView ? ISCHIA_DATA.mlat : ISCHIA_DATA.lat
+  );
   const [zoom, setZoom] = useState(isMobileView ? 11 : 12);
   const [openModal, setOpenModal] = useState(false);
 
