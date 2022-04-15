@@ -104,7 +104,7 @@ export default function Home({ isMobileView }) {
         });
       });
 
-      map.current.addSource('trailheads', {
+      map.current.addSource('barriere', {
         type: 'geojson',
         data: '/api/trailheads',
         cluster: true,
@@ -115,7 +115,7 @@ export default function Home({ isMobileView }) {
       map.current.addLayer({
         id: 'trailheads-circle',
         type: 'circle',
-        source: 'trailheads',
+        source: 'barriere',
 
         paint: {
           'circle-color': [
@@ -140,7 +140,7 @@ export default function Home({ isMobileView }) {
       map.current.addLayer({
         id: 'trailheads-symbols',
         type: 'symbol',
-        source: 'trailheads',
+        source: 'barriere',
         layout: {
           'icon-image': ['get', 'icon-type'],
           'icon-size': 0.25,
@@ -150,14 +150,40 @@ export default function Home({ isMobileView }) {
         },
       });
 
-      map.current.on('click', async (event) => {
-        setMarkerCoords([event.lngLat.lng, event.lngLat.lat]);
+      map.current.on('click', (event) => {
+        console.log(event);
+        const bbox = [
+          [event.point.x - 5, event.point.y - 5],
+          [event.point.x + 5, event.point.y + 5],
+        ];
+        // Find features intersecting the bounding box.
+        const selectedFeatures = map.current.queryRenderedFeatures(bbox, {
+          layers: ['trailheads-circle'],
+        });
+
+        if (selectedFeatures?.length > 0) {
+          const feature = selectedFeatures[0];
+          setMarkerData(feature.properties);
+        } else setMarkerCoords([event.lngLat.lng, event.lngLat.lat]);
+      });
+
+      map.current.on('click', 'land', (event) => {
+        console.log(event);
+      });
+
+      map.current.on('mouseenter', 'trailheads-circle', () => {
+        map.current.getCanvas().style.cursor = 'pointer';
+      });
+
+      // Change it back to a pointer when it leaves.
+      map.current.on('mouseleave', 'trailheads-circle', () => {
+        map.current.getCanvas().style.cursor = '';
       });
 
       map.current.addLayer({
         id: 'trailheads-cluster-count',
         type: 'symbol',
-        source: 'trailheads',
+        source: 'barriere',
         layout: {
           'text-font': ['Lato Bold'],
           'text-field': ['get', 'point_count'],
