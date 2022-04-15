@@ -14,12 +14,12 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 const SDF_ICONS = ['store-icon'];
 
-export default function Home() {
+export default function Home({ isMobileView }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(ISCHIA_DATA.lng);
   const [lat, setLat] = useState(ISCHIA_DATA.lat);
-  const [zoom, setZoom] = useState(12);
+  const [zoom, setZoom] = useState(isMobileView ? 11 : 12);
   const [openModal, setOpenModal] = useState(false);
 
   const submitForm = async () => {
