@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { GENERAL_SETTINGS, ISCHIA_DATA } from 'lib/utils';
 import { message } from 'react-message-popup';
+import Head from 'next/head';
 
 /* Style */
 import style from 'styles/pages/index.module.css';
@@ -11,8 +12,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from '!mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
-
-const SDF_ICONS = ['store-icon'];
 
 export default function Home({ isMobileView }) {
   const mapContainer = useRef(null);
@@ -130,12 +129,15 @@ export default function Home({ isMobileView }) {
 
   return (
     <main className={style.mapWrapper}>
+      <Head>
+        <title>Barriere Architettoniche Ischia</title>
+      </Head>
       <div ref={mapContainer} className={style.mapContainer} />
       <button
         className={style.reportButton}
         onClick={() => setOpenModal(!openModal)}
       >
-        Segnala una Barriera Archiettonica
+        Segnala una Barriera Archietettonica
       </button>
       {openModal && (
         <div className={style.reportModalWrapper}>

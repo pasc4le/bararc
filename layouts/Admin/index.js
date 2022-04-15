@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Auth } from './auth';
 import supabase from 'lib/supabase';
+import Head from 'next/head';
 
 export function AdminLayout({ children }) {
   const [session, setSession] = useState(null);
@@ -25,10 +26,12 @@ export function AdminLayout({ children }) {
     }
     return child;
   });
-  console.log(session);
 
   return session ? (
     <>
+      <Head>
+        <title>Barriere Architettoniche - Admin</title>
+      </Head>
       <div className="bg-black flex px-2 text-white font-sans font-medium text-sm py-1">
         <div>
           <p>Loggato come {session.user.email}</p>

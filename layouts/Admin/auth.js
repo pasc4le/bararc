@@ -34,7 +34,7 @@ export function Auth() {
   return (
     <div className={style.auth_wrapper}>
       <Head>
-        <title>BarArc - Auth</title>
+        <title>Barriere Architettoniche Ischia - Login</title>
       </Head>
       <div className={style.auth_box}>
         <h1 className={style.header}>Accesso</h1>
