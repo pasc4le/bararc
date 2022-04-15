@@ -2,6 +2,10 @@
   @apply w-full flex justify-center;
 }
 
+.noNewReports {
+  @apply mt-2;
+}
+
 .reportsWrapper {
   @apply w-full md:w-1/2 md:min-w-[600px];
   @apply mt-20;

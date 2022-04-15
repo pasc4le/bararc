@@ -45,6 +45,11 @@ export default function Admin() {
     <main className={style.mainWrapper}>
       <div className={style.reportsWrapper}>
         <h2>Segnalazioni in Arrivo</h2>
+        {trailheads?.length <= 0 && (
+          <p className={style.noNewReports}>
+            Non ci sono nuove segnalazioni :,(
+          </p>
+        )}
         {trailheads &&
           trailheads.map((v, i) => {
             return (
