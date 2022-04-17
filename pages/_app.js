@@ -1,4 +1,5 @@
 import 'styles/globals.css';
+import 'animate.css';
 
 function BarArcApp({ Component, pageProps, isMobileView }) {
   const getLayout = Component.getLayout || ((page) => page);

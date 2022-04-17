@@ -206,7 +206,12 @@ export default function Home({ isMobileView }) {
         </button>
       )}
       {markerData && (
-        <div className={style.markerDataModal}>
+        <div
+          className={[
+            style.markerDataModal,
+            'animate__animated animate__slideInLeft animate__faster',
+          ].join(' ')}
+        >
           <h4>{markerData.name}</h4>
           <p>{markerData.address}</p>
           <p>{markerData.desc}</p>
@@ -250,7 +255,13 @@ export default function Home({ isMobileView }) {
             className={style.reportModalClose}
             onClick={() => setOpenModal(!openModal)}
           />
-          <div className={style.reportModal} id="reportModal">
+          <div
+            className={[
+              style.reportModal,
+              'animate__animated animate__slideInUp animate__faster',
+            ].join(' ')}
+            id="reportModal"
+          >
             <h3>Segnala una barriera</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ut
