@@ -151,12 +151,11 @@ export default function Home({ isMobileView }) {
       });
 
       map.current.on('click', (event) => {
-        console.log(event);
         const bbox = [
           [event.point.x - 5, event.point.y - 5],
           [event.point.x + 5, event.point.y + 5],
         ];
-        // Find features intersecting the bounding box.
+
         const selectedFeatures = map.current.queryRenderedFeatures(bbox, {
           layers: ['trailheads-circle'],
         });
