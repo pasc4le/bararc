@@ -4,11 +4,10 @@ import supabase from 'lib/supabase';
 import style from 'styles/pages/auth.module.css';
 import Head from 'next/head';
 
-export function Auth() {
+export function Auth({ setError }) {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(undefined);
 
   const handleLogin = async (email, password) => {
     try {
@@ -17,6 +16,8 @@ export function Auth() {
       if (error) throw error;
     } catch (error) {
       setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -28,6 +29,8 @@ export function Auth() {
       alert('Check your inbox to verify your email');
     } catch (error) {
       setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 

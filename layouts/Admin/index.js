@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Auth } from './auth';
 import supabase from 'lib/supabase';
 import Head from 'next/head';
+import { message } from 'react-message-popup';
 
 export function AdminLayout({ children }) {
   const [session, setSession] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const session = supabase.auth.session();
@@ -15,6 +17,11 @@ export function AdminLayout({ children }) {
       else if (event == 'SIGNED_OUT') setSession(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (error) message.error(error?.message || 'Some error occurred');
+    console.log(error);
+  }, [error]);
 
   const logout = () => {
     supabase.auth.signOut();
@@ -48,6 +55,6 @@ export function AdminLayout({ children }) {
       {childrenWithProps}
     </>
   ) : (
-    <Auth />
+    <Auth setError={setError} />
   );
 }
