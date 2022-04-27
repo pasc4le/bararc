@@ -1,5 +1,6 @@
 .mainWrapper {
   @apply w-full flex justify-center;
+  @apply mt-28 mb-20;
 }
 
 .noNewReports {
@@ -8,7 +9,6 @@
 
 .reportsWrapper {
   @apply w-full md:w-1/2 md:min-w-[600px];
-  @apply mt-20;
   @apply px-5;
 
   h2 {
@@ -62,6 +62,19 @@
           @apply bg-black text-white;
         }
       }
+    }
+  }
+}
+
+.allTrailheadsHeading {
+  @apply mt-10 flex justify-center items-center;
+
+  .searchBox {
+    @apply ml-auto;
+
+    input {
+      @apply bg-warmGray-100 pt-1 px-2 rounded-md font-sans h-[100%];
+      @apply focus:outline-none;
     }
   }
 }
