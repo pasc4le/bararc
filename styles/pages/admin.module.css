@@ -12,7 +12,7 @@
     @apply px-5;
 
     h2 {
-        @apply font-sans text-3xl font-bold;
+        @apply font-sans text-3xl font-bold text-center sm:!text-left;
     }
 
     .reportBox {
@@ -31,13 +31,16 @@
 
             h3 {
                 @apply font-sans font-semibold text-lg;
+                @apply flex items-center gap-1;
 
                 .reportBoxGrade {
-                    @apply inline px-1 rounded-lg mr-1;
+                    @apply px-1;
+                    @apply w-4 h-4 rounded-sm;
                 }
 
                 img {
-                    @apply inline object-contain w-4 -mt-1;
+                    @apply object-contain w-full h-full;
+                    @apply w-4 h-4;
                     filter: invert(1);
                 }
             }
@@ -67,10 +70,10 @@
 }
 
 .allTrailheadsHeading {
-    @apply mt-10 flex justify-center items-center;
+    @apply mt-10 flex flex-col gap-2 sm:gap-0 sm:flex-row justify-center items-center;
 
     .searchBox {
-        @apply ml-auto;
+        @apply sm:ml-auto;
 
         input {
             @apply bg-warmGray-100 pt-1 px-2 rounded-md font-sans h-[100%];
