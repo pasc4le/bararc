@@ -1,80 +1,80 @@
 .mainWrapper {
-  @apply w-full flex justify-center;
-  @apply mt-28 mb-20;
+    @apply w-full flex justify-center;
+    @apply mt-28 mb-20;
 }
 
 .noNewReports {
-  @apply mt-2;
+    @apply mt-2;
 }
 
 .reportsWrapper {
-  @apply w-full md:w-1/2 md:min-w-[600px];
-  @apply px-5;
+    @apply w-full md:w-1/2 md:min-w-[600px];
+    @apply px-5;
 
-  h2 {
-    @apply font-sans text-3xl font-bold;
-  }
-
-  .reportBox {
-    @apply flex items-center gap-4 my-5;
-    @apply border-2 border-[#ebebeb];
-    @apply px-3 py-2;
-    @apply rounded-md;
-    box-shadow: 0px 5px 0px #ebebeb;
-
-    &Image {
-      @apply w-20 sm:w-28 object-cover rounded-md;
+    h2 {
+        @apply font-sans text-3xl font-bold;
     }
 
-    &Info {
-      @apply flex-1;
+    .reportBox {
+        @apply flex items-center gap-4 my-5;
+        @apply border-2 border-[#ebebeb];
+        @apply px-3 py-2;
+        @apply rounded-md;
+        box-shadow: 0px 5px 0px #ebebeb;
 
-      h3 {
-        @apply font-sans font-semibold text-lg;
-
-        .reportBoxGrade {
-          @apply inline px-1 rounded-lg mr-1;
+        &Image {
+            @apply w-20 sm:w-28 object-cover rounded-md;
         }
 
-        img {
-          @apply inline object-contain w-4 -mt-1;
-          filter: invert(1);
+        &Info {
+            @apply flex-1;
+
+            h3 {
+                @apply font-sans font-semibold text-lg;
+
+                .reportBoxGrade {
+                    @apply inline px-1 rounded-lg mr-1;
+                }
+
+                img {
+                    @apply inline object-contain w-4 -mt-1;
+                    filter: invert(1);
+                }
+            }
+
+            p {
+                @apply opacity-75 text-sm;
+            }
+
+            .reportBoxButtons {
+                @apply flex justify-end gap-2;
+
+                button {
+                    @apply px-2 rounded-lg;
+                    @apply opacity-80 hover:opacity-100;
+                }
+
+                .reportBoxDeny {
+                    @apply bg-red-500 text-white;
+                }
+
+                .reportBoxAccept {
+                    @apply bg-black text-white;
+                }
+            }
         }
-      }
-
-      p {
-        @apply opacity-75 text-sm;
-      }
-
-      .reportBoxButtons {
-        @apply flex justify-end gap-2;
-
-        button {
-          @apply px-2 rounded-lg;
-          @apply opacity-80 hover:opacity-100;
-        }
-
-        .reportBoxDeny {
-          @apply bg-red-500 text-white;
-        }
-
-        .reportBoxAccept {
-          @apply bg-black text-white;
-        }
-      }
     }
-  }
 }
 
 .allTrailheadsHeading {
-  @apply mt-10 flex justify-center items-center;
+    @apply mt-10 flex justify-center items-center;
 
-  .searchBox {
-    @apply ml-auto;
+    .searchBox {
+        @apply ml-auto;
 
-    input {
-      @apply bg-warmGray-100 pt-1 px-2 rounded-md font-sans h-[100%];
-      @apply focus:outline-none;
+        input {
+            @apply bg-warmGray-100 pt-1 px-2 rounded-md font-sans h-[100%];
+            @apply focus:outline-none;
+        }
     }
-  }
 }

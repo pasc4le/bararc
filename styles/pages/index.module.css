@@ -1,72 +1,72 @@
 .mapContainer {
-  @apply h-screen relative;
+    @apply h-screen relative;
 }
 
 .markerDataModal {
-  @apply relative md:fixed md:top-0 md:left-0 w-full md:w-1/4 md:bottom-0;
-  @apply bg-white;
-  @apply px-4 pt-6 pb-24;
-  @apply md:shadow-md;
-  @apply -mt-64 md:-mt-0;
-  @apply min-h-[300px] md:min-w-[350px];
-  @apply z-10;
+    @apply relative md:fixed md:top-0 md:left-0 w-full md:w-1/4 md:bottom-0;
+    @apply bg-white;
+    @apply px-4 pt-6 pb-24;
+    @apply md:shadow-md;
+    @apply -mt-64 md:-mt-0;
+    @apply min-h-[300px] md:min-w-[350px];
+    @apply z-10;
 
-  h4 {
-    @apply font-sans font-semibold text-2xl;
-  }
+    h4 {
+        @apply font-sans font-semibold text-2xl;
+    }
 }
 
 .reportButton {
-  @apply absolute bottom-10 sm:bottom-5 left-1/2;
-  @apply text-base;
-  @apply bg-black;
-  @apply font-bold text-white shadow-md;
-  @apply px-4 py-2 rounded-full;
-  @apply opacity-70 hover:opacity-100 transition-all;
-  @apply min-w-[300px];
-  transform: translateX(-50%);
+    @apply absolute bottom-10 sm:bottom-5 left-1/2;
+    @apply text-base;
+    @apply bg-black;
+    @apply font-bold text-white shadow-md;
+    @apply px-4 py-2 rounded-full;
+    @apply opacity-70 hover:opacity-100 transition-all;
+    @apply min-w-[300px];
+    transform: translateX(-50%);
 }
 
 .reportModalWrapper {
-  @apply fixed inset-0 bg-black bg-opacity-50 z-20;
-  @apply flex justify-center overflow-y-auto;
+    @apply fixed inset-0 bg-black bg-opacity-50 z-20;
+    @apply flex justify-center overflow-y-auto;
 
-  .reportModalClose {
-    @apply inset-0 absolute z-20;
-  }
-
-  .reportModal {
-    @apply z-30 bg-white w-full md:w-1/2 md:min-w-[600px];
-    @apply mt-14 md:mt-32 min-h-[calc(100vh-3.5rem)] md:min-h-[calc(100vh-8rem)];
-    @apply rounded-t-lg;
-    @apply h-max;
-    @apply flex flex-col items-center;
-    @apply px-5 py-10;
-
-    label {
-      @apply w-full font-medium text-sm font-sans mb-1;
+    .reportModalClose {
+        @apply inset-0 absolute z-20;
     }
 
-    h3 {
-      @apply text-3xl font-bold;
-    }
+    .reportModal {
+        @apply z-30 bg-white w-full md:w-1/2 md:min-w-[600px];
+        @apply mt-14 md:mt-32 min-h-[calc(100vh-3.5rem)] md:min-h-[calc(100vh-8rem)];
+        @apply rounded-t-lg;
+        @apply h-max;
+        @apply flex flex-col items-center;
+        @apply px-5 py-10;
 
-    p {
-      @apply leading-tight w-3/4 text-center opacity-70 my-2.5;
-    }
+        label {
+            @apply w-full font-medium text-sm font-sans mb-1;
+        }
 
-    input,
-    textarea,
-    select {
-      @apply mb-2.5 w-full py-2 px-2;
-      @apply rounded-md bg-warmGray-100;
-      @apply focus:outline-none;
-    }
+        h3 {
+            @apply text-3xl font-bold;
+        }
 
-    button {
-      @apply font-semibold text-xl bg-lime-500 text-white;
-      @apply px-4 py-2 rounded-full mt-3.5;
-      @apply hover:bg-lime-600;
+        p {
+            @apply leading-tight w-3/4 text-center opacity-70 my-2.5;
+        }
+
+        input,
+        textarea,
+        select {
+            @apply mb-2.5 w-full py-2 px-2;
+            @apply rounded-md bg-warmGray-100;
+            @apply focus:outline-none;
+        }
+
+        button {
+            @apply font-semibold text-xl bg-lime-500 text-white;
+            @apply px-4 py-2 rounded-full mt-3.5;
+            @apply hover:bg-lime-600;
+        }
     }
-  }
 }

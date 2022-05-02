@@ -1,3 +1,3 @@
-import tailwindConfig from '../tailwind.config.js'
+import tailwindConfig from '../tailwind.config.js';
 
-export default tailwindConfig.theme.fonts
+export default tailwindConfig.theme.fonts;
